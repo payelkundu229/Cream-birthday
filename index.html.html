@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy Birthday, Creamy Patootie ✨🤍</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Google Fonts: Cormorant Garamond, Great Vibes, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rosewater: '#fff0f3',
+            blushSilk: '#ffe3e8',
+            pastelPink: '#ffccd5',
+            candyPetal: '#ff758f',
+            vintageRose: '#c94a65',
+            deepRose: '#8a2846',
+            champagne: '#faedd9',
+            goldAccent: '#d4af37',
+          },
+          fontFamily: {
+            serifHeading: ['"Cormorant Garamond"', 'serif'],
+            cursiveScript: ['"Great Vibes"', 'cursive'],
+            bodySans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 0%, #fff6f8 0%, #fdf0f3 45%, #fce7ec 100%);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      color: #3f2d34;
+      min-height: 100vh;
+    }
+
+    /* Ambient noise & sparkle glow layer */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+    }
+
+    /* 3D Envelope Animation Structure */
+    .envelope-box {
+      perspective: 1200px;
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .envelope-flap {
+      transform-origin: top center;
+      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 25;
+    }
+    .envelope-flap.open {
+      transform: rotateX(180deg);
+      z-index: 5;
+    }
+    .letter-paper {
+      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, opacity 0.8s ease;
+    }
+    .letter-paper.slide-out {
+      transform: translateY(-160px);
+    }
+
+    /* Coquette Polaroid styling with subtle natural shadow */
+    .polaroid-frame {
+      background: #ffffff;
+      padding: 12px 12px 20px 12px;
+      box-shadow: 0 12px 30px -8px rgba(201, 74, 101, 0.16), 0 4px 8px -2px rgba(0,0,0,0.04);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 1px solid rgba(255, 230, 235, 0.8);
+    }
+    .polaroid-frame:hover {
+      transform: translateY(-8px) scale(1.03) rotate(0deg) !important;
+      box-shadow: 0 20px 40px -10px rgba(201, 74, 101, 0.28);
+      z-index: 30;
+    }
+
+    /* Washi aesthetic tape */
+    .washi-tape-strip {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 76px;
+      height: 22px;
+      background: rgba(255, 215, 225, 0.82);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border-left: 2px dashed rgba(255,255,255,0.9);
+      border-right: 2px dashed rgba(255,255,255,0.9);
+    }
+
+    /* Candle flicker animation */
+    @keyframes candleSway {
+      0%, 100% { transform: scale(1) rotate(-1.5deg); }
+      50% { transform: scale(1.15, 1.25) rotate(2deg); filter: drop-shadow(0 0 14px #ffbe76); }
+    }
+    .flame-active {
+      animation: candleSway 1.2s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
+
+    /* Vinyl spinning */
+    @keyframes vinylSpin {
+      100% { transform: rotate(360deg); }
+    }
+    .vinyl-spinning {
+      animation: vinylSpin 6s linear infinite;
+    }
+    .vinyl-paused {
+      animation-play-state: paused;
+    }
+
+    /* Glassmorphism card */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+  </style>
+</head>
+<body class="relative selection:bg-candyPetal selection:text-white">
+
+  <!-- Aesthetic Ambient Background Glow Orbs -->
+  <div class="glow-orb w-[380px] h-[380px] bg-blushSilk -top-20 -left-20"></div>
+  <div class="glow-orb w-[420px] h-[420px] bg-[#ffe0e8] top-1/3 -right-28"></div>
+  <div class="glow-orb w-[360px] h-[360px] bg-[#fff0e6] bottom-10 left-10"></div>
+
+  <!-- Continuous Petal & Sparkle Canvas -->
+  <canvas id="ambientCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- ================= FLOATING MUSIC WIDGET ================= -->
+  <aside class="fixed top-4 right-4 z-50">
+    <div class="glass-card pl-2.5 pr-4 py-2 rounded-full shadow-lg border border-blushSilk flex items-center gap-3 transition-all duration-300 hover:shadow-xl">
+      <button id="togglePlayBtn" class="flex items-center gap-2.5 focus:outline-none group" title="Play / Pause Melody">
+        <div id="vinylDisc" class="w-8 h-8 rounded-full bg-gradient-to-tr from-vintageRose via-candyPetal to-pink-300 flex items-center justify-center text-white text-xs shadow-md vinyl-paused">
+          💿
+        </div>
+        <div class="text-left">
+          <p class="text-[11px] font-bold text-vintageRose tracking-wide flex items-center gap-1">
+            <span id="musicTitle">Birthday Music Box</span>
+            <span id="equalizerBars" class="inline-flex items-end gap-0.5 h-2.5 opacity-0 transition-opacity">
+              <span class="w-0.5 h-2 bg-candyPetal animate-pulse"></span>
+              <span class="w-0.5 h-3 bg-vintageRose animate-bounce"></span>
+              <span class="w-0.5 h-1.5 bg-candyPetal animate-pulse"></span>
+            </span>
+          </p>
+          <p id="musicStateSub" class="text-[9px] text-slate-400 font-medium">Tap to play</p>
+        </div>
+      </button>
+
+      <!-- Music options popover trigger -->
+      <button id="openAudioSettings" class="text-slate-400 hover:text-vintageRose text-xs p-1 focus:outline-none" title="Change song or volume">
+        ⚙️
+      </button>
+    </div>
+
+    <!-- Mini Audio Control Dropdown -->
+    <div id="audioSettingsPanel" class="hidden absolute right-0 mt-2 w-64 glass-card p-3 rounded-2xl shadow-2xl border border-blushSilk text-xs space-y-2.5">
+      <div class="flex items-center justify-between">
+        <span class="font-bold text-slate-700">Volume</span>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.75" class="w-24 accent-candyPetal cursor-pointer" />
+      </div>
+      <div class="pt-1 border-t border-rose-100">
+        <span class="font-semibold text-slate-600 block mb-1">Use Your Own Song:</span>
+        <label class="block w-full py-1.5 px-2 text-center rounded-lg bg-rosewater text-vintageRose font-medium cursor-pointer hover:bg-blushSilk transition text-[10px]">
+          Upload custom MP3
+          <input type="file" id="customAudioFile" accept="audio/*" class="hidden" />
+        </label>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Background Audio Element -->
+  <!-- Premium soft acoustic / warm birthday lofi stream fallback with Web Audio music box backup -->
+  <audio id="bgAudio" loop preload="auto" playsinline webkit-playsinline>
+    <source src="music.mp3" type="audio/mpeg">
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+  </audio>
+
+
+  <!-- ================= SCREEN 1: 3D ENVELOPE SURPRISE ================= -->
+  <section id="envelopeScreen" class="min-h-screen flex flex-col items-center justify-center p-4 relative z-10 transition-all duration-700">
+    <div class="max-w-md w-full text-center">
+
+      <div class="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-white/80 border border-blushSilk text-vintageRose text-xs tracking-widest uppercase mb-6 shadow-sm">
+        <span>💌 A Special Delivery</span>
+      </div>
+
+      <!-- 3D Envelope Container -->
+      <div class="envelope-box relative mx-auto w-full max-w-[340px] sm:max-w-[380px] h-[250px]">
+        
+        <!-- Letter Sheet hidden inside envelope -->
+        <div id="innerLetter" class="letter-paper absolute inset-x-4 top-4 bg-[#fffcf9] rounded-2xl p-6 shadow-md border border-rose-100 text-left z-10 opacity-90">
+          <p class="font-cursiveScript text-2xl text-vintageRose leading-none">For Creamy Patootie,</p>
+          <p class="font-serifHeading italic text-sm text-slate-600 mt-2 line-clamp-3">
+            “You are the one and only special person in my adulthood...”
+          </p>
+        </div>
+
+        <!-- Envelope Back Pocket -->
+        <div class="absolute inset-0 bg-[#fde2e8] rounded-2xl shadow-xl border border-blushSilk z-0"></div>
+
+        <!-- Envelope Flap (Triangular Top) -->
+        <div id="envelopeFlap" class="envelope-flap absolute top-0 inset-x-0 h-28 bg-[#fbcad4] rounded-t-2xl shadow-sm border-t border-white/60 flex items-center justify-center cursor-pointer" onclick="openSurprise()">
+          <!-- Real looking Wax Seal Button -->
+          <div id="waxSeal" class="absolute -bottom-6 w-14 h-14 rounded-full bg-gradient-to-br from-vintageRose to-deepRose flex items-center justify-center text-white shadow-lg border-2 border-[#ff9ebb] cursor-pointer transform hover:scale-110 active:scale-95 transition-transform duration-200">
+            <span class="font-cursiveScript text-2xl pt-1">CP</span>
+          </div>
+        </div>
+
+        <!-- Envelope Front Cover -->
+        <div class="absolute inset-x-0 bottom-0 h-36 bg-[#fed7e0] rounded-b-2xl shadow-inner border-b border-white z-20 flex flex-col items-center justify-end pb-4 pointer-events-none">
+          <p class="font-cursiveScript text-xl text-deepRose">Tap the seal to open</p>
+        </div>
+      </div>
+
+      <div class="mt-12 space-y-2">
+        <h2 class="font-serifHeading italic text-2xl sm:text-3xl text-slate-800">
+          To My Sweetest Creamy Patootie 🌸
+        </h2>
+        <p class="text-xs text-slate-500 font-medium">Please turn your volume on before unwrapping ✨</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= SCREEN 2: MAIN BIRTHDAY CELEBRATION ================= -->
+  <main id="celebrationContent" class="hidden relative z-10 pb-28 max-w-4xl mx-auto px-4 sm:px-6 pt-6">
+
+    <!-- Top Romantic Badge & Title -->
+    <header class="text-center pt-6 pb-12">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-blushSilk text-vintageRose text-xs font-semibold tracking-wider uppercase mb-4 shadow-sm">
+        <span>✨ Today is All About You ✨</span>
+      </div>
+      <h1 class="font-cursiveScript text-5xl sm:text-7xl text-vintageRose leading-tight mb-2">
+        Happy Birthday, Creamy Patootie!
+      </h1>
+      <p class="font-serifHeading italic text-xl sm:text-2xl text-slate-600 max-w-xl mx-auto">
+        May every second of this new year shower you with the same warmth you give to everyone around you.
+      </p>
+    </header>
+
+    <!-- CORE SPECIAL MESSAGE: THE ADULTHOOD CONFESSION -->
+    <section class="mb-16">
+      <div class="relative glass-card rounded-3xl p-8 sm:p-12 shadow-xl shadow-rose-200/40 border border-white">
+        <div class="absolute -top-4 -right-3 text-3xl select-none">🎀</div>
+        <div class="absolute -bottom-3 -left-3 text-3xl select-none">🤍</div>
+
+        <div class="text-center mb-6">
+          <span class="text-[11px] font-bold tracking-widest uppercase text-vintageRose/80">From My Whole Heart</span>
+          <div class="w-10 h-0.5 bg-gradient-to-r from-transparent via-candyPetal to-transparent mx-auto mt-2"></div>
+        </div>
+
+        <blockquote class="text-center my-4">
+          <p class="font-serifHeading text-2xl sm:text-4xl text-slate-800 leading-snug font-semibold">
+            “You are the <span class="font-cursiveScript text-4xl sm:text-5xl text-vintageRose px-1">one and only special person</span> in my adulthood.”
+          </p>
+        </blockquote>
+
+        <div class="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed text-center font-normal max-w-2xl mx-auto mt-6">
+          <p>
+            Growing up makes everything rush by so quickly, with deadlines, responsibilities, and days that blend together. But in the middle of all the noise, you became my peace.
+          </p>
+          <p>
+            You are the person I look forward to talking to, the person whose smiles make my hardest days dissolve, and the one whose presence makes adulthood feel safe, silly, and beautiful. Babe You are completely irreplaceable to me. 
+          </p>
+        </div>
+
+        <div class="mt-8 flex justify-center items-center gap-3 text-xs font-semibold text-vintageRose">
+          <span>🌸 Forever Grateful</span>
+          <span>•</span>
+          <span>Always in Your Corner</span>
+          <span>•</span>
+          <span>Happy Birthday</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE "OPEN WHEN..." SECRET LOVE NOTES -->
+    <section class="mb-20">
+      <div class="text-center mb-8">
+        <span class="text-xs uppercase tracking-widest text-vintageRose font-bold">Little Envelopes For Your Days</span>
+        <h2 class="font-serifHeading text-3xl sm:text-4xl text-slate-800 mt-1">"Open When..." Notes 💌</h2>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto mt-1">Tap each letter to unfold a little reminder written just for you.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+        <!-- Note 1 -->
+        <div onclick="toggleCard(this)" class="glass-card p-5 rounded-2xl border border-white shadow-sm hover:shadow-md cursor-pointer transition-all duration-300">
+          <div class="flex items-center justify-between">
+            <span class="font-serifHeading text-lg font-semibold text-slate-800">🌧️ Open when you feel tired...</span>
+            <span class="text-[11px] font-bold text-vintageRose bg-rosewater px-2.5 py-1 rounded-full">Read Note</span>
+          </div>
+          <p class="hidden text-xs sm:text-sm text-slate-600 leading-relaxed mt-3 pt-3 border-t border-rose-100 font-normal">
+            Take a deep breath and gently lower your shoulders. You give so much to everything you do, Creamy Patootie. It is completely okay to rest today. I am so proud of how hard you try, always.
+          </p>
+        </div>
+
+        <!-- Note 2 -->
+        <div onclick="toggleCard(this)" class="glass-card p-5 rounded-2xl border border-white shadow-sm hover:shadow-md cursor-pointer transition-all duration-300">
+          <div class="flex items-center justify-between">
+            <span class="font-serifHeading text-lg font-semibold text-slate-800">🥺 Open when you doubt yourself...</span>
+            <span class="text-[11px] font-bold text-vintageRose bg-rosewater px-2.5 py-1 rounded-full">Read Note</span>
+          </div>
+          <p class="hidden text-xs sm:text-sm text-slate-600 leading-relaxed mt-3 pt-3 border-t border-rose-100 font-normal">
+            Look back at every single storm you've already walked through. You carry so much grace, kindness, and quiet strength. Don't let a bad day trick you into forgetting how extraordinary you are.
+          </p>
+        </div>
+
+        <!-- Note 3 -->
+        <div onclick="toggleCard(this)" class="glass-card p-5 rounded-2xl border border-white shadow-sm hover:shadow-md cursor-pointer transition-all duration-300">
+          <div class="flex items-center justify-between">
+            <span class="font-serifHeading text-lg font-semibold text-slate-800">✨ Open when you need a smile...</span>
+            <span class="text-[11px] font-bold text-vintageRose bg-rosewater px-2.5 py-1 rounded-full">Read Note</span>
+          </div>
+          <p class="hidden text-xs sm:text-sm text-slate-600 leading-relaxed mt-3 pt-3 border-t border-rose-100 font-normal">
+            Just a gentle reminder: your laugh is my absolute favorite sound, and you make ordinary days feel like soft sunny mornings. Never lose that bright light of yours!
+          </p>
+        </div>
+
+        <!-- Note 4 -->
+        <div onclick="toggleCard(this)" class="glass-card p-5 rounded-2xl border border-white shadow-sm hover:shadow-md cursor-pointer transition-all duration-300">
+          <div class="flex items-center justify-between">
+            <span class="font-serifHeading text-lg font-semibold text-slate-800">🤍 Open when you miss me...</span>
+            <span class="text-[11px] font-bold text-vintageRose bg-rosewater px-2.5 py-1 rounded-full">Read Note</span>
+          </div>
+          <p class="hidden text-xs sm:text-sm text-slate-600 leading-relaxed mt-3 pt-3 border-t border-rose-100 font-normal">
+            No matter the distance or time, I am always just a message away. You are never navigating this world alone—you will always have me in your corner.
+          </p>
+        </div>
+      </div>
+
+      <!-- Love Note Jar -->
+      <div class="mt-8 max-w-md mx-auto glass-card rounded-2xl p-6 text-center border border-white shadow-md">
+        <span class="text-2xl select-none">🫙</span>
+        <h3 class="font-serifHeading text-xl text-slate-800 font-semibold mt-1">Little Jar of Affirmations</h3>
+        <p id="wishJarDisplay" class="font-serifHeading italic text-sm sm:text-base text-vintageRose mt-3 min-h-[48px] flex items-center justify-center transition-opacity duration-300">
+          “You have this gentle superpower of making any ordinary room feel warm.”
+        </p>
+        <button onclick="drawWishNote()" class="mt-4 px-4 py-2 rounded-full bg-rosewater hover:bg-blushSilk text-vintageRose font-bold text-xs transition active:scale-95">
+          Pick Another Note ✨
+        </button>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE 3D BIRTHDAY CAKE & BLOW WISH -->
+    <section class="mb-20">
+      <div class="glass-card rounded-3xl p-8 sm:p-10 text-center max-w-lg mx-auto shadow-xl shadow-rose-100 border border-white relative overflow-hidden">
+        <div class="washi-tape-strip"></div>
+        
+        <span class="text-xs uppercase tracking-widest text-vintageRose font-bold">A Birthday Tradition</span>
+        <h2 class="font-serifHeading text-2xl sm:text-3xl text-slate-800 mt-1 mb-1">Make a Sweet Wish 🎂</h2>
+        <p class="text-xs text-slate-500 mb-6">Think of your dream for this year, then tap to blow out the candle!</p>
+
+        <!-- Cake SVG Illustration with dynamic flame -->
+        <div class="relative w-44 h-44 mx-auto flex items-center justify-center cursor-pointer group" onclick="blowCandle()">
+          <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-md">
+            <!-- Plate with soft reflection -->
+            <ellipse cx="100" cy="172" rx="85" ry="16" fill="#f8d7df" />
+            <ellipse cx="100" cy="168" rx="76" ry="12" fill="#ffffff" />
+            
+            <!-- Bottom Sponge Tier -->
+            <path d="M42 120 C42 105, 158 105, 158 120 L158 152 C158 166, 42 166, 42 152 Z" fill="#ffd1dc" />
+            
+            <!-- Cream Icing Drips -->
+            <path d="M42 122 C48 135, 58 135, 65 122 C72 136, 82 136, 90 122 C98 136, 110 136, 118 122 C126 136, 138 136, 146 122 C152 132, 158 126, 158 122 L158 116 C158 102, 42 102, 42 116 Z" fill="#ffffff" />
+
+            <!-- Berry toppings -->
+            <circle cx="68" cy="120" r="5" fill="#e84364" />
+            <circle cx="100" cy="120" r="6" fill="#e84364" />
+            <circle cx="132" cy="120" r="5" fill="#e84364" />
+
+            <!-- Central Candle -->
+            <rect x="96" y="66" width="8" height="42" rx="3" fill="#ffeaa7" />
+            <line x1="100" y1="66" x2="100" y2="58" stroke="#718096" stroke-width="2" />
+
+            <!-- Dynamic Candle Flame -->
+            <g id="candleFlameGroup" class="flame-active">
+              <!-- Outer Glow -->
+              <ellipse cx="100" cy="50" rx="9" ry="14" fill="#ffa502" opacity="0.9" />
+              <!-- Core Flame -->
+              <ellipse cx="100" cy="52" rx="5" ry="9" fill="#fffbe0" />
+            </g>
+
+            <!-- Smoke Puff when extinguished -->
+            <g id="smokePuff" class="hidden">
+              <path d="M100 58 Q95 48 102 38 T98 22" fill="none" stroke="#b2bec3" stroke-width="2.5" stroke-linecap="round" opacity="0.75" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="mt-4">
+          <button id="blowActionBtn" onclick="blowCandle()" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-candyPetal to-vintageRose text-white font-semibold text-xs tracking-wide shadow-md shadow-rose-200 hover:shadow-lg hover:scale-105 active:scale-95 transition-all">
+            ✨ Tap Here to Blow Candle
+          </button>
+          <div id="wishGrantedMessage" class="hidden mt-3 text-xs font-semibold text-vintageRose animate-fade-in">
+            🎉 Candle blown! May all your heartfelt wishes come true, Creamy Patootie! 🌟
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHOTO GALLERY: AESTHETIC POLAROIDS WITH INSTANT PHOTO SWAP -->
+    <section class="mb-20">
+      <div class="text-center mb-8">
+        <span class="text-xs uppercase tracking-widest text-vintageRose font-bold">Polaroid Memory Wall</span>
+        <h2 class="font-serifHeading text-3xl sm:text-4xl text-slate-800 mt-1">Glimpses of You 📷</h2>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto mt-1">Tap any frame to zoom or upload your favorite genuine photos together!</p>
+      </div>
+
+      <!-- 5 Photo Polaroids Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+
+        <!-- Polaroid 1 -->
+        <div class="polaroid-frame relative rounded-xl max-w-[270px] w-full transform -rotate-2 cursor-pointer group">
+          <div class="washi-tape-strip"></div>
+          <div class="w-full h-60 bg-rose-50 rounded-lg overflow-hidden relative" onclick="viewPhoto(0)">
+            <img id="polaroid-img-0" src="photo1.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80'" alt="Creamy Patootie Memory 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium">Click to expand</div>
+          </div>
+          <div class="pt-3 pb-1 text-center">
+            <p id="caption-0" class="font-cursiveScript text-2xl text-slate-800">That softest smile ✨</p>
+            <p class="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">Keepsake #01</p>
+            <label class="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-vintageRose bg-rosewater hover:bg-blushSilk px-2.5 py-1 rounded-full cursor-pointer transition">
+              📷 Choose Photo 1
+              <input type="file" accept="image/*" class="hidden" onchange="uploadSinglePhoto(0, event)">
+            </label>
+          </div>
+        </div>
+
+        <!-- Polaroid 2 -->
+        <div class="polaroid-frame relative rounded-xl max-w-[270px] w-full transform rotate-3 cursor-pointer group">
+          <div class="washi-tape-strip"></div>
+          <div class="w-full h-60 bg-rose-50 rounded-lg overflow-hidden relative" onclick="viewPhoto(1)">
+            <img id="polaroid-img-1" src="photo2.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=80'" alt="Creamy Patootie Memory 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium">Click to expand</div>
+          </div>
+          <div class="pt-3 pb-1 text-center">
+            <p id="caption-1" class="font-cursiveScript text-2xl text-slate-800">Cozy coffee & laughter ☕</p>
+            <p class="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">Keepsake #02</p>
+            <label class="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-vintageRose bg-rosewater hover:bg-blushSilk px-2.5 py-1 rounded-full cursor-pointer transition">
+              📷 Choose Photo 2
+              <input type="file" accept="image/*" class="hidden" onchange="uploadSinglePhoto(1, event)">
+            </label>
+          </div>
+        </div>
+
+        <!-- Polaroid 3 -->
+        <div class="polaroid-frame relative rounded-xl max-w-[270px] w-full transform -rotate-3 cursor-pointer group">
+          <div class="washi-tape-strip"></div>
+          <div class="w-full h-60 bg-rose-50 rounded-lg overflow-hidden relative" onclick="viewPhoto(2)">
+            <img id="polaroid-img-2" src="photo3.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=700&q=80'" alt="Creamy Patootie Memory 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium">Click to expand</div>
+          </div>
+          <div class="pt-3 pb-1 text-center">
+            <p id="caption-2" class="font-cursiveScript text-2xl text-slate-800">Golden hour peace 🌅</p>
+            <p class="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">Keepsake #03</p>
+            <label class="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-vintageRose bg-rosewater hover:bg-blushSilk px-2.5 py-1 rounded-full cursor-pointer transition">
+              📷 Choose Photo 3
+              <input type="file" accept="image/*" class="hidden" onchange="uploadSinglePhoto(2, event)">
+            </label>
+          </div>
+        </div>
+
+        <!-- Polaroid 4 -->
+        <div class="polaroid-frame relative rounded-xl max-w-[270px] w-full transform rotate-2 cursor-pointer group">
+          <div class="washi-tape-strip"></div>
+          <div class="w-full h-60 bg-rose-50 rounded-lg overflow-hidden relative" onclick="viewPhoto(3)">
+            <img id="polaroid-img-3" src="photo4.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=700&q=80'" alt="Creamy Patootie Memory 4" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium">Click to expand</div>
+          </div>
+          <div class="pt-3 pb-1 text-center">
+            <p id="caption-3" class="font-cursiveScript text-2xl text-slate-800">My favorite laugh 🤍</p>
+            <p class="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">Keepsake #04</p>
+            <label class="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-vintageRose bg-rosewater hover:bg-blushSilk px-2.5 py-1 rounded-full cursor-pointer transition">
+              📷 Choose Photo 4
+              <input type="file" accept="image/*" class="hidden" onchange="uploadSinglePhoto(3, event)">
+            </label>
+          </div>
+        </div>
+
+        <!-- Polaroid 5 (Center Highlight) -->
+        <div class="polaroid-frame relative rounded-xl max-w-[270px] w-full transform -rotate-1 cursor-pointer group sm:col-span-2 lg:col-span-1">
+          <div class="washi-tape-strip"></div>
+          <div class="w-full h-60 bg-rose-50 rounded-lg overflow-hidden relative" onclick="viewPhoto(4)">
+            <img id="polaroid-img-4" src="photo5.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80'" alt="Creamy Patootie Memory 5" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium">Click to expand</div>
+          </div>
+          <div class="pt-3 pb-1 text-center">
+            <p id="caption-4" class="font-cursiveScript text-2xl text-slate-800">The one and only 🌸</p>
+            <p class="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">Keepsake #05</p>
+            <label class="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-vintageRose bg-rosewater hover:bg-blushSilk px-2.5 py-1 rounded-full cursor-pointer transition">
+              📷 Choose Photo 5
+              <input type="file" accept="image/*" class="hidden" onchange="uploadSinglePhoto(4, event)">
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Upload helper & Reset -->
+      <div class="text-center mt-6 flex flex-wrap items-center justify-center gap-3">
+        <label class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-blushSilk text-vintageRose text-xs font-semibold cursor-pointer hover:bg-white transition shadow-sm">
+          <span>🌸 Pick all 5 photos at once</span>
+          <input type="file" id="bulkPhotoUpload" accept="image/*" multiple class="hidden" onchange="uploadBulkPhotos(event)" />
+        </label>
+        <button onclick="clearSavedPhotos()" class="text-[11px] font-medium text-slate-400 hover:text-vintageRose underline px-2 py-1 transition">
+          Reset Photos
+        </button>
+      </div>
+    </section>
+
+    <!-- FOOTER SIGN-OFF -->
+    <footer class="text-center pt-8 border-t border-rose-200/50">
+      <p class="font-cursiveScript text-4xl text-vintageRose mb-1">Happiest Birthday, Creamy Patootie</p>
+      <p class="text-xs text-slate-400 font-medium">Handcrafted with pure love • The one & only in my adulthood 🌸</p>
+    </footer>
+
+  </main>
+
+
+  <!-- ================= PHOTO EXPAND MODAL ================= -->
+  <div id="photoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+    <div class="glass-card rounded-3xl p-4 sm:p-6 max-w-md w-full shadow-2xl relative border border-white">
+      <button onclick="closePhotoModal()" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-vintageRose text-white flex items-center justify-center shadow-lg hover:bg-deepRose transition focus:outline-none">
+        ✕
+      </button>
+      <div class="rounded-2xl overflow-hidden bg-slate-100 max-h-[65vh]">
+        <img id="modalFullImg" src="" alt="Full Memory" class="w-full h-full object-contain" />
+      </div>
+      <div class="mt-4 text-center">
+        <p id="modalFullCaption" class="font-cursiveScript text-3xl text-vintageRose"></p>
+        <div class="mt-2 flex justify-center gap-2">
+          <label class="text-[11px] font-semibold text-slate-500 bg-rosewater hover:bg-blushSilk px-3 py-1 rounded-full cursor-pointer transition">
+            Replace this photo
+            <input type="file" accept="image/*" class="hidden" onchange="replaceCurrentModalPhoto(event)">
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    // --- 1. Ambient Petals & Sparkle Canvas Animation (Ultra-smooth 60fps) ---
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const particleCount = 28;
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 5 + 3,
+        d: Math.random() * particleCount,
+        color: ['rgba(255,182,193,0.5)', 'rgba(255,209,220,0.6)', 'rgba(255,240,245,0.7)', 'rgba(218,112,136,0.3)'][Math.floor(Math.random() * 4)],
+        tilt: Math.floor(Math.random() * 10) - 10,
+        tiltAngleIncremental: (Math.random() * 0.07) + 0.03,
+        tiltAngle: 0
+      });
+    }
+
+    function drawAmbientParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < particleCount; i++) {
+        const p = particles[i];
+        p.tiltAngle += p.tiltAngleIncremental;
+        p.y += (Math.cos(p.d) + 1 + p.r / 2) * 0.4;
+        p.x += Math.sin(0.5) * 0.5;
+        p.tilt = Math.sin(p.tiltAngle - (i / 3)) * 8;
+
+        if (p.y > height) {
+          p.x = Math.random() * width;
+          p.y = -20;
+          p.tilt = Math.floor(Math.random() * 10) - 10;
+        }
+
+        ctx.beginPath();
+        ctx.lineWidth = p.r / 2;
+        ctx.strokeStyle = p.color;
+        ctx.beginPath();
+        ctx.moveTo(p.x + p.tilt + (p.r / 4), p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + (p.r / 4));
+        ctx.stroke();
+      }
+      requestAnimationFrame(drawAmbientParticles);
+    }
+    drawAmbientParticles();
+
+
+    // --- 2. High-Quality Web Audio Music Box Synthesizer Backup + MP3 Stream ---
+    // If the external MP3 ever has a connection lag, our rich WebAudio music-box plays flawlessly!
+    const bgAudio = document.getElementById('bgAudio');
+    const vinylDisc = document.getElementById('vinylDisc');
+    const equalizerBars = document.getElementById('equalizerBars');
+    const musicStateSub = document.getElementById('musicStateSub');
+    let isMusicPlaying = false;
+    let webAudioContext = null;
+    let synthTimer = null;
+
+    // Sweet Music-Box melody of "Happy Birthday" (Warm high-harmonic sine notes)
+    const birthdayMelodyNotes = [
+      { f: 523.25, d: 0.35 }, { f: 523.25, d: 0.25 }, { f: 587.33, d: 0.6 }, { f: 523.25, d: 0.6 }, { f: 698.46, d: 0.6 }, { f: 659.25, d: 1.1 },
+      { f: 523.25, d: 0.35 }, { f: 523.25, d: 0.25 }, { f: 587.33, d: 0.6 }, { f: 523.25, d: 0.6 }, { f: 783.99, d: 0.6 }, { f: 698.46, d: 1.1 },
+      { f: 523.25, d: 0.35 }, { f: 523.25, d: 0.25 }, { f: 1046.50, d: 0.6 }, { f: 880.00, d: 0.6 }, { f: 698.46, d: 0.6 }, { f: 659.25, d: 0.6 }, { f: 587.33, d: 0.9 },
+      { f: 932.33, d: 0.35 }, { f: 932.33, d: 0.25 }, { f: 880.00, d: 0.6 }, { f: 698.46, d: 0.6 }, { f: 783.99, d: 0.6 }, { f: 698.46, d: 1.4 }
+    ];
+
+    function playMusicBoxBell(freq, duration) {
+      if (!webAudioContext) return;
+      const osc = webAudioContext.createOscillator();
+      const gain = webAudioContext.createGain();
+      
+      // Sine wave layered with gentle overtone
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, webAudioContext.currentTime);
+
+      gain.gain.setValueAtTime(0.0001, webAudioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.18, webAudioContext.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, webAudioContext.currentTime + duration);
+
+      osc.connect(gain);
+      gain.connect(webAudioContext.destination);
+
+      osc.start();
+      osc.stop(webAudioContext.currentTime + duration);
+    }
+
+    let noteCursor = 0;
+    function loopMusicBox() {
+      if (!isMusicPlaying) return;
+      const note = birthdayMelodyNotes[noteCursor];
+      playMusicBoxBell(note.f, note.d);
+      synthTimer = setTimeout(() => {
+        noteCursor = (noteCursor + 1) % birthdayMelodyNotes.length;
+        loopMusicBox();
+      }, (note.d + 0.1) * 1000);
+    }
+
+    function startMusic() {
+      isMusicPlaying = true;
+      vinylDisc.classList.remove('vinyl-paused');
+      vinylDisc.classList.add('vinyl-spinning');
+      equalizerBars.style.opacity = '1';
+      musicStateSub.textContent = 'Playing now';
+
+      // Ensure AudioContext is unlocked for iOS Safari
+      if (!webAudioContext) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) webAudioContext = new AudioCtx();
+      }
+      if (webAudioContext && webAudioContext.state === 'suspended') {
+        webAudioContext.resume();
+      }
+
+      // Attempt MP3 stream/file first; fallback to WebAudio Music Box bells
+      bgAudio.volume = parseFloat(document.getElementById('volumeSlider').value);
+      const playPromise = bgAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Fallback to Web Audio Music Box
+          loopMusicBox();
+        });
+      }
+    }
+
+    // iOS Safari Audio Unlock on first touch anywhere
+    document.addEventListener('touchstart', function unlockAudioIOS() {
+      if (!webAudioContext) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) webAudioContext = new AudioCtx();
+      }
+      if (webAudioContext && webAudioContext.state === 'suspended') {
+        webAudioContext.resume();
+      }
+      document.removeEventListener('touchstart', unlockAudioIOS);
+    }, { once: true });
+
+    function pauseMusic() {
+      isMusicPlaying = false;
+      bgAudio.pause();
+      clearTimeout(synthTimer);
+      vinylDisc.classList.add('vinyl-paused');
+      equalizerBars.style.opacity = '0';
+      musicStateSub.textContent = 'Paused';
+    }
+
+    document.getElementById('togglePlayBtn').addEventListener('click', () => {
+      if (isMusicPlaying) pauseMusic(); else startMusic();
+    });
+
+    document.getElementById('openAudioSettings').addEventListener('click', () => {
+      document.getElementById('audioSettingsPanel').classList.toggle('hidden');
+    });
+
+    document.getElementById('volumeSlider').addEventListener('input', (e) => {
+      bgAudio.volume = e.target.value;
+    });
+
+    // Custom Audio File Uploader
+    document.getElementById('customAudioFile').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const objUrl = URL.createObjectURL(file);
+        bgAudio.src = objUrl;
+        document.getElementById('musicTitle').textContent = file.name.slice(0, 16) + '...';
+        startMusic();
+      }
+    });
+
+
+    // --- 3. 3D Envelope Unfolding Animation ---
+    function openSurprise() {
+      const flap = document.getElementById('envelopeFlap');
+      const letter = document.getElementById('innerLetter');
+      const envelopeScreen = document.getElementById('envelopeScreen');
+      const celebrationContent = document.getElementById('celebrationContent');
+
+      // Peeling sound & flap open
+      flap.classList.add('open');
+      
+      // Launch confetti
+      triggerSweetConfetti();
+
+      // Start music automatically with user gesture
+      startMusic();
+
+      // Slide letter up
+      setTimeout(() => {
+        letter.classList.add('slide-out');
+      }, 350);
+
+      // Transition smoothly to main celebration screen
+      setTimeout(() => {
+        envelopeScreen.style.opacity = '0';
+        setTimeout(() => {
+          envelopeScreen.classList.add('hidden');
+          celebrationContent.classList.remove('hidden');
+          celebrationContent.style.opacity = '0';
+          setTimeout(() => {
+            celebrationContent.style.transition = 'opacity 0.8s ease';
+            celebrationContent.style.opacity = '1';
+            triggerSweetConfetti();
+          }, 50);
+        }, 500);
+      }, 1400);
+    }
+
+    // --- 4. Confetti & Candle Blow Functions ---
+    function triggerSweetConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#ff758f', '#ffccd5', '#d4af37', '#ffffff']
+        });
+      }
+    }
+
+    function blowCandle() {
+      const flame = document.getElementById('candleFlameGroup');
+      const smoke = document.getElementById('smokePuff');
+      const wishMsg = document.getElementById('wishGrantedMessage');
+      const btn = document.getElementById('blowActionBtn');
+
+      if (flame) flame.classList.add('hidden');
+      if (smoke) smoke.classList.remove('hidden');
+      if (wishMsg) wishMsg.classList.remove('hidden');
+      if (btn) {
+        btn.textContent = '🤍 Wish Sent to the Stars!';
+        btn.disabled = true;
+        btn.classList.add('opacity-75', 'cursor-default');
+      }
+
+      triggerSweetConfetti();
+    }
+
+    // --- 5. Polaroid Gallery & Persistent Photo Storage Logic ---
+    const captions = [
+      "That softest smile ✨",
+      "Cozy coffee & laughter ☕",
+      "Golden hour peace 🌅",
+      "My favorite laugh 🤍",
+      "The one and only 🌸"
+    ];
+
+    let activeModalIndex = 0;
+
+    // Load any previously saved photos from persistent storage on startup
+    function loadSavedPhotos() {
+      for (let i = 0; i < 5; i++) {
+        const saved = localStorage.getItem(`cp_polaroid_${i}`);
+        if (saved) {
+          const imgElem = document.getElementById(`polaroid-img-${i}`);
+          if (imgElem) imgElem.src = saved;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', loadSavedPhotos);
+
+    function viewPhoto(index) {
+      activeModalIndex = index;
+      const img = document.getElementById(`polaroid-img-${index}`);
+      const modal = document.getElementById('photoModal');
+      const modalImg = document.getElementById('modalFullImg');
+      const modalCaption = document.getElementById('modalFullCaption');
+
+      modalImg.src = img.src;
+      modalCaption.textContent = captions[index];
+
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.remove('opacity-0'), 20);
+    }
+
+    function closePhotoModal() {
+      const modal = document.getElementById('photoModal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    // Helper: compress image slightly before saving so it fits in storage permanently
+    function processAndSaveImage(index, file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const maxDim = 900;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) { h = (h * maxDim) / w; w = maxDim; }
+            else { w = (w * maxDim) / h; h = maxDim; }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+          // Update image on page
+          const targetImg = document.getElementById(`polaroid-img-${index}`);
+          if (targetImg) targetImg.src = compressedDataUrl;
+
+          // Save permanently in browser storage
+          try {
+            localStorage.setItem(`cp_polaroid_${index}`, compressedDataUrl);
+          } catch (err) {
+            console.warn('Storage limit reached, displaying without caching', err);
+          }
+
+          const modalFull = document.getElementById('modalFullImg');
+          if (modalFull && activeModalIndex === index) {
+            modalFull.src = compressedDataUrl;
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function uploadSinglePhoto(index, event) {
+      const file = event.target.files[0];
+      if (file) {
+        processAndSaveImage(index, file);
+      }
+    }
+
+    function replaceCurrentModalPhoto(event) {
+      const file = event.target.files[0];
+      if (file) {
+        processAndSaveImage(activeModalIndex, file);
+      }
+    }
+
+    function uploadBulkPhotos(event) {
+      const files = Array.from(event.target.files).slice(0, 5);
+      files.forEach((file, index) => {
+        processAndSaveImage(index, file);
+      });
+    }
+
+    function clearSavedPhotos() {
+      for (let i = 0; i < 5; i++) {
+        localStorage.removeItem(`cp_polaroid_${i}`);
+      }
+      location.reload();
+    }
+
+    // --- 5b. Toggle "Open When..." Love Note Cards ---
+    function toggleCard(cardElement) {
+      const paragraph = cardElement.querySelector('p');
+      const badge = cardElement.querySelector('span:nth-child(2)');
+      
+      if (paragraph) {
+        const isHidden = paragraph.classList.contains('hidden');
+        if (isHidden) {
+          paragraph.classList.remove('hidden');
+          paragraph.classList.add('animate-fade-in');
+          if (badge) badge.textContent = 'Close Note';
+          cardElement.classList.add('ring-2', 'ring-candyPetal/50');
+        } else {
+          paragraph.classList.add('hidden');
+          if (badge) badge.textContent = 'Read Note';
+          cardElement.classList.remove('ring-2', 'ring-candyPetal/50');
+        }
+      }
+    }
+
+    // --- 6. Love Note Jar Drawing ---
+    const jarNotes = [
+      "“You have this gentle superpower of making any ordinary room feel warm.”",
+      "“Out of all 8 billion people, having you in my adulthood is my greatest blessing.”",
+      "“Thank you for being the person I can always be silly and vulnerable with.”",
+      "“Your laugh is genuinely my favorite sound in this entire city.”",
+      "“You are doing so well, and I will always be right behind you cheering you on.”"
+    ];
+    let noteIdx = 0;
+
+    function drawWishNote() {
+      const box = document.getElementById('wishJarDisplay');
+      box.style.opacity = '0';
+      setTimeout(() => {
+        noteIdx = (noteIdx + 1) % jarNotes.length;
+        box.textContent = jarNotes[noteIdx];
+        box.style.opacity = '1';
+      }, 250);
+    }
+  </script>
+</body>
+</html>
